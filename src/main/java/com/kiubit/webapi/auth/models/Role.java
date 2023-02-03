@@ -1,4 +1,4 @@
-package com.kiubit.webapi.models;
+package com.kiubit.webapi.auth.models;
 
 public enum Role {
     USER,

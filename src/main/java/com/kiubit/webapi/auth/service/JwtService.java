@@ -1,4 +1,4 @@
-package com.kiubit.webapi.service;
+package com.kiubit.webapi.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -24,11 +24,12 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token){
+        System.out.println(token);
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
 
@@ -45,8 +46,8 @@ public class JwtService {
         return Jwts.builder().setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60+24))
-                .signWith(getSignInKey(), SignatureAlgorithm.ES256)
+                .setExpiration(new Date(System.currentTimeMillis()+10000*60+24))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
     private Key getSignInKey() {
@@ -56,7 +57,7 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUsername(token);
-        return username.equals(userDetails.getUsername()) && isTokenExpired(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
@@ -64,7 +65,6 @@ public class JwtService {
     }
 
     private Date extractExpiration(String token) {
-        //todo ajuste
         return extractClaim(token,Claims::getExpiration);
     }
 }

@@ -1,6 +1,6 @@
-package com.kiubit.webapi.repositories;
+package com.kiubit.webapi.auth.repositories;
 
-import com.kiubit.webapi.models.UsuarioModel;
+import com.kiubit.webapi.auth.models.UsuarioModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

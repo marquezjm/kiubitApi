@@ -1,7 +1,7 @@
-package com.kiubit.webapi.controllers;
+package com.kiubit.webapi.auth.controllers;
 
-import com.kiubit.webapi.models.UsuarioModel;
-import com.kiubit.webapi.repositories.UsuarioRepositorycopy;
+import com.kiubit.webapi.auth.repositories.UsuarioRepositorycopy;
+import com.kiubit.webapi.auth.models.UsuarioModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

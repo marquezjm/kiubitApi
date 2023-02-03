@@ -1,4 +1,4 @@
-package com.kiubit.webapi.models;
+package com.kiubit.webapi.auth.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class UsuarioModel implements UserDetails {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String nombre;
     private String apellidos;
