@@ -2,6 +2,7 @@ package com.kiubit.webapi.auth.controllers;
 
 import com.kiubit.webapi.auth.models.AuthenticationRequest;
 import com.kiubit.webapi.auth.models.AuthenticationResponse;
+import com.kiubit.webapi.auth.models.CommonResponse;
 import com.kiubit.webapi.auth.models.RegisterRequest;
 import com.kiubit.webapi.auth.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
+    public ResponseEntity<CommonResponse<AuthenticationResponse>> authenticate(@RequestBody AuthenticationRequest request){
         return ResponseEntity.ok(service.authenticate(request));
     }
 }
