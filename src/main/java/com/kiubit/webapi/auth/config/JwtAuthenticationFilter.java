@@ -35,18 +35,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
-            /*CommonResponse<AuthenticationResponse> respuesta=new CommonResponse<AuthenticationResponse>(new AuthenticationResponse("Must provide a valid token to continue"),false,"Authentication Failed");
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+            if (!request.getRequestURI().startsWith("/kiubit/api/swagger") && !request.getRequestURI().startsWith("/kiubit/api/auth/authenticate")&&!request.getRequestURI().startsWith("/kiubit/api/v3/api-docs")){
+                CommonResponse<AuthenticationResponse> respuesta = new CommonResponse<AuthenticationResponse>(new AuthenticationResponse("Must provide a valid token to continue"), false, "Authentication Failed");
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-            mapper.writeValue(response.getWriter(), respuesta);*/
+                mapper.writeValue(response.getWriter(), respuesta);
+            }
             filterChain.doFilter(request,response);
             return;
         }
         jwt = authHeader.substring(7);
         System.out.println(jwt);
-        userEmail = jwtService.extractUsername(jwt);//todo extract the userEmail from JWT token
+        try{
+            userEmail = jwtService.extractUsername(jwt);//todo extract the userEmail from JWT token
+        }catch (Exception e){
+            CommonResponse<AuthenticationResponse> respuesta = new CommonResponse<AuthenticationResponse>(new AuthenticationResponse("Invalid Token"), false, "Authentication Failed");
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+            mapper.writeValue(response.getWriter(), respuesta);
+            filterChain.doFilter(request,response);
+            return;
+        }
+
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             if(jwtService.isTokenValid(jwt,userDetails)){
