@@ -2,6 +2,7 @@ package com.kiubit.webapi.auth.service;
 
 import com.kiubit.webapi.auth.models.*;
 import com.kiubit.webapi.auth.repositories.UsuarioRepository;
+import com.kiubit.webapi.models.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

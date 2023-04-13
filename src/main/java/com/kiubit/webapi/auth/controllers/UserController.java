@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController
-@RequestMapping("usuario")
+//@RestController
+//@RequestMapping("usuario")
 public class UserController {
 
     @Autowired

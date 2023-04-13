@@ -2,7 +2,7 @@ package com.kiubit.webapi.auth.controllers;
 
 import com.kiubit.webapi.auth.models.AuthenticationRequest;
 import com.kiubit.webapi.auth.models.AuthenticationResponse;
-import com.kiubit.webapi.auth.models.CommonResponse;
+import com.kiubit.webapi.models.CommonResponse;
 import com.kiubit.webapi.auth.models.RegisterRequest;
 import com.kiubit.webapi.auth.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;

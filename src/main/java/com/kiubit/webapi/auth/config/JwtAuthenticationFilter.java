@@ -2,7 +2,7 @@ package com.kiubit.webapi.auth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kiubit.webapi.auth.models.AuthenticationResponse;
-import com.kiubit.webapi.auth.models.CommonResponse;
+import com.kiubit.webapi.models.CommonResponse;
 import com.kiubit.webapi.auth.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-            if (!request.getRequestURI().startsWith("/kiubit/api/swagger") && !request.getRequestURI().startsWith("/kiubit/api/auth/authenticate")&&!request.getRequestURI().startsWith("/kiubit/api/v3/api-docs")){
+            if (!request.getRequestURI().startsWith("/kiubit/api/swagger") && !request.getRequestURI().startsWith("/kiubit/api/auth/authenticate")&&!request.getRequestURI().startsWith("/kiubit/api/v3/api-docs")&&!request.getRequestURI().startsWith("/kiubit/api/public")){
                 CommonResponse<AuthenticationResponse> respuesta = new CommonResponse<AuthenticationResponse>(new AuthenticationResponse("Must provide a valid token to continue"), false, "Authentication Failed");
                 response.setStatus(HttpStatus.FORBIDDEN.value());
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);

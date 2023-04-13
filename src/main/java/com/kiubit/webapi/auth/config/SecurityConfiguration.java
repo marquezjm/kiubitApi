@@ -20,11 +20,11 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http.cors().disable()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**","/swagger-ui/**","/swagger-ui.html","/v3/api-docs/**")
+                .requestMatchers("/auth/**","/swagger-ui/**","/swagger-ui.html","/v3/api-docs/**","/public/**")
 
                 .permitAll()
                 .anyRequest()

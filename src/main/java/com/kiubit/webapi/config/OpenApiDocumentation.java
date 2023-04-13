@@ -1,4 +1,4 @@
-package com.kiubit.webapi.auth.config;
+package com.kiubit.webapi.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

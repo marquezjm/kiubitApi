@@ -1,4 +1,4 @@
-package com.kiubit.webapi.auth.models;
+package com.kiubit.webapi.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
