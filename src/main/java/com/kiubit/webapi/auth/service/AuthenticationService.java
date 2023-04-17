@@ -42,6 +42,8 @@ public class AuthenticationService {
             );
         }catch(BadCredentialsException e){
             return new CommonResponse<AuthenticationResponse>(new AuthenticationResponse(""),false,"Authentication Failed");
+        }catch(Exception e){
+            return new CommonResponse<AuthenticationResponse>(new AuthenticationResponse(""),false,"Authentication Failed");
         }
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();

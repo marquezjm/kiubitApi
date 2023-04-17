@@ -36,7 +36,7 @@ public class CorsConfig implements Filter {
     public void destroy() {
         Filter.super.destroy();
     }
-    /*@Bean
+    @Bean
     public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer() {
             @Override
@@ -51,5 +51,5 @@ public class CorsConfig implements Filter {
                         .allowedMethods("*");
             }
         };
-    }*/
+    }
 }
