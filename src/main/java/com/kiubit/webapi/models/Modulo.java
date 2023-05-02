@@ -10,20 +10,19 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Curso {
+public class Modulo {
 
     @Column(name = "id")
     private String id;
 
+    @Column(name = "id_curso")
+    private String idCurso;
+
     @Column(name = "nombre")
     private String nombre;
-
-    @Column(name = "imagen")
-    private String imagen;
 
     @Column(name = "descripcion")
     private String descripcion;
 
-    private List<Modulo> listaModulos;
-
+    private List<Tema> listaTemas;
 }
