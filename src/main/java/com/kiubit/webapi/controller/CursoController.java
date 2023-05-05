@@ -40,7 +40,7 @@ public class CursoController {
 
     @Operation(summary = "select",description = "Select cursos")
     @SecurityRequirement(name = "Bearer Authentication")
-    @PostMapping(path = "select")
+    @GetMapping(path = "select")
     public CommonResponse<List<Curso>> selectCurso(){
         return service.selectCurso();
     }
