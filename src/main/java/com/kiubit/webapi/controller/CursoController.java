@@ -2,16 +2,15 @@ package com.kiubit.webapi.controller;
 
 import com.kiubit.webapi.models.CommonResponse;
 import com.kiubit.webapi.models.Curso;
+import com.kiubit.webapi.models.cursos.RegistrarCursoRequest;
+import com.kiubit.webapi.models.cursos.RegistrarCursoResponse;
 import com.kiubit.webapi.services.CursosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +29,19 @@ public class CursoController {
     @GetMapping
     public CommonResponse<List<Curso>> getCursos(){
         return service.getCursos();
+    }
+
+    @Operation(summary = "registrar",description = "Registrar un nuevo curso")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @PostMapping(path = "registrar")
+    public CommonResponse<RegistrarCursoResponse> registrarCurso(@RequestBody(required = true) RegistrarCursoRequest request){
+        return service.registrarCurso(request);
+    }
+
+    @Operation(summary = "select",description = "Select cursos")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @PostMapping(path = "select")
+    public CommonResponse<List<Curso>> selectCurso(){
+        return service.selectCurso();
     }
 }
