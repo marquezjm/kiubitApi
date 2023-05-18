@@ -2,9 +2,9 @@ package com.kiubit.webapi.repository.impl;
 
 import com.kiubit.webapi.beans.CallProcedures;
 import com.kiubit.webapi.models.Curso;
-import com.kiubit.webapi.models.cursos.RegistrarCursoRequest;
-import com.kiubit.webapi.models.cursos.RegistrarCursoResponse;
-import com.kiubit.webapi.models.cursos.SqlResponse;
+import com.kiubit.webapi.models.Modulo;
+import com.kiubit.webapi.models.Tema;
+import com.kiubit.webapi.models.cursos.*;
 import com.kiubit.webapi.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -18,6 +18,7 @@ import org.springframework.util.LinkedCaseInsensitiveMap;
 
 import java.sql.CallableStatement;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,22 +41,65 @@ public class CursoRepositoryImpl implements CursoRepository {
 
     @Override
     public Map<String, Object> registrarCurso(RegistrarCursoRequest request) {
+        List<SqlParameter> typeParams = new ArrayList<>();
+        typeParams.add(new SqlParameter("p_nombre", Types.VARCHAR));
+        typeParams.add(new SqlParameter("p_imagen", Types.VARCHAR));
+        typeParams.add(new SqlParameter("p_descripcion", Types.VARCHAR));
+        typeParams.add(new SqlParameter("p_usuario", Types.VARCHAR));
         SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("p_nombre", request.getNombre())
                 .addValue("p_imagen", request.getImagen())
                 .addValue("p_descripcion", request.getDescripcion())
                 .addValue("p_usuario", request.getUsuario());
-        return callProcedures.myStoredProcedureCall().execute(params);
+        return callProcedures.myStoredProcedureCall("CREAR_CURSO",typeParams,RegistrarCursoResponse.class,SqlResponse.class).execute(params);
     }
 
     @Override
-    public Map<String, Object> selectCurso() {
-        /*SqlParameterSource params = new MapSqlParameterSource()
+    public Map<String, Object> selectCurso(SelectCursoRequest request) {
+        List<SqlParameter> typeParams = new ArrayList<>();
+        typeParams.add(new SqlParameter("p_nombre", Types.VARCHAR));
+        typeParams.add(new SqlParameter("p_descripcion", Types.VARCHAR));
+        typeParams.add(new SqlParameter("p_pagina", Types.INTEGER));
+        typeParams.add(new SqlParameter("p_size", Types.INTEGER));
+        SqlParameterSource params = new MapSqlParameterSource()
                 .addValue("p_nombre", request.getNombre())
-                .addValue("p_imagen", request.getImagen())
                 .addValue("p_descripcion", request.getDescripcion())
-                .addValue("p_usuario", request.getUsuario());*/
-        return callProcedures.selectCursosStoredProcedureCall().execute();
+                .addValue("p_pagina", request.getPagina())
+                .addValue("p_size", request.getSize());
+        return callProcedures.myStoredProcedureCall("SELECT_CURSO",typeParams,Curso.class,SqlResponse.class).execute(params);
+    }
+
+    @Override
+    public Map<String, Object> registrarModulo(RegistrarModuloRequest request) {
+        List<SqlParameter> typeParams = new ArrayList<>();
+        typeParams.add(new SqlParameter("p_id_curso", Types.VARCHAR));
+        typeParams.add(new SqlParameter("p_nombre", Types.VARCHAR));
+        typeParams.add(new SqlParameter("p_descripcion", Types.VARCHAR));
+        typeParams.add(new SqlParameter("p_usuario", Types.VARCHAR));
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_curso", request.getIdCurso())
+                .addValue("p_nombre", request.getNombre())
+                .addValue("p_descripcion", request.getDescripcion())
+                .addValue("p_usuario", request.getUsuario());
+        return callProcedures.myStoredProcedureCall("CREAR_MODULO",typeParams,RegistrarCursoResponse.class,SqlResponse.class).execute(params);
+    }
+
+    @Override
+    public Map<String, Object> selectModulo(SelectModuloRequest request) {
+        List<SqlParameter> typeParams = new ArrayList<>();
+        typeParams.add(new SqlParameter("p_id_curso", Types.VARCHAR));
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_curso", request.getIdCurso());
+        return callProcedures.myStoredProcedureCall("SELECT_MODULO",typeParams, Modulo.class,SqlResponse.class).execute(params);
+    }
+
+    @Override
+    public Map<String, Object> selectTema(SelectTemaRequest request) {
+        List<SqlParameter> typeParams = new ArrayList<>();
+        typeParams.add(new SqlParameter("p_id_modulo", Types.VARCHAR));
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_modulo", request.getIdModulo());
+        return callProcedures.myStoredProcedureCall("SELECT_TEMAS",typeParams, Tema.class,SqlResponse.class).execute(params);
     }
 
     /*public SimpleJdbcCall myStoredProcedureCall() {
