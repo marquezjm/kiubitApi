@@ -19,4 +19,8 @@ public interface CursoRepository {
     public Map<String, Object> selectTema(SelectTemaRequest request);
 
     public Map<String, Object> registrarModulo(RegistrarModuloRequest request);
+
+    public Map<String, Object> seleccionarUltimoVisto(String usuario);
+    public Map<String, Object> seleccionarSuscripcionesUsuario(String usuario);
+    public Map<String, Object> seleccionarCursoById(String usuario);
 }

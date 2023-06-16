@@ -116,5 +116,31 @@ public class CursoRepositoryImpl implements CursoRepository {
         return jdbcCall;
     }*/
 
+    @Override
+    public Map<String, Object> seleccionarUltimoVisto(String usuario) {
+        List<SqlParameter> typeParams = new ArrayList<>();
+        typeParams.add(new SqlParameter("p_usuario", Types.VARCHAR));
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_usuario", usuario);
+        return callProcedures.myStoredProcedureCall("SELECT_ULTIMO_VISTO",typeParams, SeleccionarUltimoVistoResponse.class,SqlResponse.class).execute(params);
+    }
+
+    @Override
+    public Map<String, Object> seleccionarSuscripcionesUsuario(String usuario) {
+        List<SqlParameter> typeParams = new ArrayList<>();
+        typeParams.add(new SqlParameter("p_usuario", Types.VARCHAR));
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_usuario", usuario);
+        return callProcedures.myStoredProcedureCall("SELECT_SUSCRIPCIONES_USUARIO",typeParams, SeleccionarSuscripcionesUsuarioResponse.class,SqlResponse.class).execute(params);
+    }
+
+    @Override
+    public Map<String, Object> seleccionarCursoById(String id_curso) {
+        List<SqlParameter> typeParams = new ArrayList<>();
+        typeParams.add(new SqlParameter("p_id_curso", Types.VARCHAR));
+        SqlParameterSource params = new MapSqlParameterSource()
+                .addValue("p_id_curso", id_curso);
+        return callProcedures.myStoredProcedureCall("SELECT_CURSO_BY_ID",typeParams, SeleccionarCursoByIdResponse.class,SqlResponse.class).execute(params);
+    }
 
 }

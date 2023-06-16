@@ -26,4 +26,7 @@ public class Curso {
 
     private List<Modulo> listaModulos;
 
+    public Curso(String id) {
+        this.id = id;
+    }
 }
