@@ -84,7 +84,7 @@ public class CursoController {
 
     @Operation(summary = "selectContenidoCurso",description = "Seleccionar contenido de curso")
     @SecurityRequirement(name = "Bearer Authentication")
-    @PostMapping(path = "selectContenidoCurso/{id_curso}")
+    @GetMapping(path = "selectContenidoCurso/{id_curso}")
     public CommonResponse<List<Curso>> selectCurso(@PathVariable(value="id_curso") String id_curso){
         return service.selectContenidoCurso(id_curso);
     }
